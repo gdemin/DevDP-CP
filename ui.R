@@ -1,8 +1,8 @@
 shinyUI(pageWithSidebar(
-  headerPanel("Привет"),
+  headerPanel("App"),
   sidebarPanel(
     
-    h3("Русский текст")
+    h3("Menu")
     
     )  ,
   mainPanel(
