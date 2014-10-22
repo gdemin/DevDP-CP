@@ -3,10 +3,11 @@ library(sna)
 # library(shinyRGL)
 shinyUI(fluidPage(
   titlePanel("Clustering app"),
+  helpText("Help is here."),
   sidebarLayout(sidebarPanel(
       selectInput(inputId = "dataset", 
                   label = "Dataset:", 
-                  choices = c("mtcars", "iris"), 
+                  choices = c("iris", "mtcars", "USArrests", "women","LifeCycleSavings"), 
                   selected = "mtcars",
                   selectize = TRUE),
       checkboxInput(inputId = "scale_data",
@@ -25,11 +26,11 @@ shinyUI(fluidPage(
       selectInput(inputId = "comm_algo", 
                   label = "Community detection method:", 
                   choices = c("edge.betweenness.community", "fastgreedy.community", "label.propagation.community", "leading.eigenvector.community", "multilevel.community"), 
-                  selected = "edge.betweenness.community",
+                  selected = "fastgreedy.community",
                   selectize = TRUE),
       selectInput(inputId = "layout", 
                   label = "Layout:", 
-                  choices = c("auto", "random", "circle", "sphere", "fruchterman.reingold", "kamada.kawai", "spring", "reingold.tilford", "fruchterman.reingold.grid", "lgl", "graphopt", "svd"), 
+                  choices = c("auto", "random", "circle",  "fruchterman.reingold", "kamada.kawai", "spring", "fruchterman.reingold.grid", "lgl", "graphopt", "svd"), 
                   selected = "auto",
                   selectize = TRUE)
 
@@ -38,9 +39,6 @@ shinyUI(fluidPage(
     mainPanel(
       
 #       webGLOutput("plot3D"),
-        checkboxInput(inputId = "use3D",
-                      label = "Use 3D rendering. Your browser should support WebGL.",
-                      value = FALSE),
         plotOutput("plot2D", width = 800, height = 800)
   
   
