@@ -22,10 +22,15 @@ shinyUI(fluidPage(
                   min = 0,
                   max = 100,
                   value = 1),
+      selectInput(inputId = "comm_algo", 
+                  label = "Community detection method:", 
+                  choices = c("edge.betweenness.community", "fastgreedy.community", "label.propagation.community", "leading.eigenvector.community", "multilevel.community"), 
+                  selected = "edge.betweenness.community",
+                  selectize = TRUE),
       selectInput(inputId = "layout", 
-                  label = "Layout", 
-                  choices = c("circle", "fruchtermanreingold", "kamadakawai"), 
-                  selected = "fruchtermanreingold",
+                  label = "Layout:", 
+                  choices = c("auto", "random", "circle", "sphere", "fruchterman.reingold", "kamada.kawai", "spring", "reingold.tilford", "fruchterman.reingold.grid", "lgl", "graphopt", "svd"), 
+                  selected = "auto",
                   selectize = TRUE)
 
     

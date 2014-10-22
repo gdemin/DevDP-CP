@@ -1,4 +1,4 @@
-library(sna)
+library(igraph)
 # library(shinyRGL)
 data(mtcars)
 data(iris)
@@ -26,10 +26,34 @@ print(str(dat))
         dist_matrix = dist_matrix/max(dist_matrix,na.rm = TRUE)
         dist_matrix[is.na(dist_matrix)] = 0
         graph_matrix = dist_matrix>(as.numeric(input$connection_dist)/100)
-        gplot(graph_matrix,
-              label = rownames(dat),
-              mode = input$layout,
-              usearrows = FALSE)
+        graph = graph.adjacency(graph_matrix, mode = "undirected")
+        gr_layout = switch(input$layout,
+                   auto = layout.auto(graph),
+                   random = layout.random(graph),
+                   circle = layout.circle(graph),
+                   sphere = layout.sphere(graph),
+                   fruchterman.reingold = layout.fruchterman.reingold(graph),
+                   kamada.kawai = layout.kamada.kawai(graph),
+                   spring = layout.spring(graph),
+                   reingold.tilford = layout.reingold.tilford(graph),
+                   fruchterman.reingold.grid = layout.fruchterman.reingold.grid(graph),
+                   lgl = layout.lgl(graph),
+                   graphopt = layout.graphopt(graph),
+                   svd = layout.svd(graph)         
+               )
+        communit = switch(input$comm_algo,
+            edge.betweenness.community = edge.betweenness.community (graph),
+            fastgreedy.community = fastgreedy.community (graph),
+            label.propagation.community = label.propagation.community (graph),
+            leading.eigenvector.community = leading.eigenvector.community (graph),
+            multilevel.community = multilevel.community (graph),
+            optimal.community = optimal.community (graph),
+            spinglass.community = spinglass.community (graph),
+            walktrap.community. = walktrap.community. (graph)
+           )
+        igraph.options(arrow.mode = 0)
+        plot(communit,graph, layout = gr_layout,
+                 mark.border = NA)
     })        
     
     #     }
