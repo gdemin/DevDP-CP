@@ -1,6 +1,4 @@
-library(sna)
 
-# library(shinyRGL)
 shinyUI(fluidPage(
   titlePanel("Clustering app"),
   helpText("Help is here."),
@@ -42,10 +40,8 @@ shinyUI(fluidPage(
     ),
     mainPanel(
       
-#       webGLOutput("plot3D"),
+
         plotOutput("plot2D", width = 800, height = 800)
-  
-  
   
     )
   )))

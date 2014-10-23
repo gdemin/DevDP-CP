@@ -1,7 +1,6 @@
 library(igraph)
-# library(shinyRGL)
-data(mtcars)
-data(iris)
+
+
 
 
 shinyServer(function(input, output) {
