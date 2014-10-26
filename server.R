@@ -12,15 +12,37 @@ shinyServer(function(input, output) {
         on.exit(progress$close())
         progress$set(value=1,message = 'Loading data...')
         rownames(iris) = paste0(iris$Species,rownames(iris)) 
-        dat = switch(input$dataset,
-            iris = iris,
-            mtcars = mtcars,
-            USArrests = USArrests,
-            women = women,
-            LifeCycleSavings = LifeCycleSavings
-            )
+        if (input$dataset!="(your own data)"){
+            dat = switch(input$dataset,
+                iris = iris,
+                mtcars = mtcars,
+                USArrests = USArrests,
+                women = women,
+                LifeCycleSavings = LifeCycleSavings
+                )
+        } else {
+            fdata = input$data_file
+            if (is.null(fdata)){
+                plot(1:3,1:3, type="n",xlab = "", ylab="",axes=FALSE)
+                text (x=2,y=2,'Please, upload your data - "Choose file" item.')
+                return()
+            } else {
+                if (fdata$size>10000){
+                    plot(1:3,1:3, type="n",xlab = "", ylab="",axes=FALSE)
+                    text (x=2,y=2,'File should be less than 10000 bytes.')
+                    return()
+                }
+                dat = read.csv(fdata$datapath,header=TRUE,sep = ",",na.string = "")
+               }
+            
+        }
         progress$set(value=2,message = 'Building graph...')
         dat = dat[,sapply(dat,is.numeric), drop = FALSE]
+        if (ncol(dat)<1){
+            plot(1:3,1:3, type="n",xlab = "", ylab="",axes=FALSE)
+            text (x=2,y=2,'There is no numeric columns in this file.')
+            return()
+        }
         if(input$scale_data) dat = scale(dat) 
         dist_matrix = as.matrix(dist(dat,method = input$dist_type))
         dist_matrix = dist_matrix/max(dist_matrix,na.rm = TRUE)
