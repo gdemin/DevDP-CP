@@ -9,7 +9,7 @@ You can choose type of distance in the appropriate drop-down. Cases with distanc
 This graph is displayed on the right. Application runs different communalities-detection
             algorithm (you can choose it from appropriate drop-down box) on this graph. 
 Different clusters displayed with different fill colors. You can select different layout for displaying graph (lowest drop-down box) .
-           Nodes are marked according to rownames of the dataset. That's all. Try it!:)"),
+           Nodes are marked according to rownames of the dataset. That's all. Try it!:)",p(a("https://github.com/gdemin/DevDP-CP"))),
   sidebarLayout(sidebarPanel(
       selectInput(inputId = "dataset", 
                   label = "Choose dataset:", 
