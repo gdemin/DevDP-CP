@@ -1,0 +1,79 @@
+---
+title       : Clustering based on graph community-detection algorithm
+subtitle    : 
+author      : 
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Theorethical background
+
+Inspired by John W. Foreman book "Data Smart". 
+
+Clustering - detection groups of similar cases in data. Classical approach is to compute pairwise distances between cases and with various method combine nearest cases. Above mentioned book suppose approach when we considered our data as graph. If distance between two cases is less than threshold value than these two cases considered as connected nodes. Further we could apply to this graph various methods of communities detection. Each discovered community corresponds to cluster. So we have following algorithm:
+
+- Compute pairwise distance
+- Build adjacency matrix - (matrix with 0/1 values - is this cases connected or not)
+- Build graph with adjacency matrix
+- Detect community on this graph
+
+--- .class #id 
+
+## Example of computations
+
+```{r, results='hide'}
+library(igraph)
+dat = mtcars # we use data about automobile
+dat = scale(dat) # scale data
+#compute pairwise distance
+dist_matrix = as.matrix(dist(dat,method = "euclid")) 
+# normalize distance (max = 1)
+dist_matrix = dist_matrix/max(dist_matrix,na.rm = TRUE) 
+# points with distance less than 30% of maximum considered connected
+graph_matrix = dist_matrix<(30/100) 
+diag(graph_matrix) = FALSE # we don't need self-connected node
+# build graph
+graph = graph.adjacency(graph_matrix, mode = "undirected") 
+communities = fastgreedy.community (graph) # detect comminities
+
+```
+
+See results on next slide.
+
+---
+
+## Clustering results
+
+
+Results of clustering. Different fill colors corresponds to different clusters.
+
+```{r}
+plot(communities,graph, mark.border = NA) # plot results
+```
+
+
+---
+
+## Application
+
+You can try application here: https://gdemin.shinyapps.io/ClusteringApp/
+
+Main features:
+
+- You could select from preloaded dataset or upload your own
+- Option to scale data
+- Different methods of distance calculation
+- Threshold value selection
+- Different algorithm of communities detection
+- Different graph plotting layouts
+
+Thank you for your attention!
+
+
+
+

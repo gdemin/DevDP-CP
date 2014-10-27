@@ -1,7 +1,7 @@
 
 shinyUI(fluidPage(title = "Clustering application",
   titlePanel("Clustering based on graph communality-detection algorithm"),
-  helpText("Inspired by John W. Foreman book \"Data Smart\". Application designed for detection similar cases in data (clustering).
+  helpText("Inspired by John W. Foreman book \"Data Smart\". Application is designed for detection groups of similar cases in data (clustering).
 You can upload your own data: in drop-down \"Choose dataset:\" select \"your own data\" and then choose file in \"Upload file with data:\". 
 Application computes pairwise distance between all cases. Before distance computation it is possible to scale data (set checkbox). 
 You can choose type of distance in the appropriate drop-down. Cases with distance less than threshold value considered
